@@ -75,7 +75,12 @@ app.post('/emprestimo', (req, res) => {
     let data = new Date;
 
     if(req.body.valor <= margem ){
-      usuario.emprestimos = {valor: req.body.valor, parcelas: req.body.parcelas, data: `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`};
+      usuario.emprestimos = {
+        valor: req.body.valor,
+        parcelas: req.body.parcelas,
+        taxa: `${taxa * 100}%`,
+        data: `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`
+      };
       usuario.save(usuario);
       res.send(usuario);
     }else {
