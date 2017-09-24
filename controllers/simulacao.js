@@ -10,10 +10,9 @@ router.use(expressJwt({secret: 'money'}));
 router.post('/', (req, res) => {
   UserSchema.findById(req.user._id, (error, usuario) => {
     let margem = usuario.renda * 0.3;
-    let taxa = req.body.taxa / 100;
-    let juros = req.body.valor * req.body.parcelas * taxa;
+    let juros = req.body.valor * req.body.parcelas * (req.body.taxa /100);
     let parcela = (parseInt(req.body.valor) + juros) / req.body.parcelas;
-
+    
     if(req.body.valor <= margem ){
       res.send(`Simulacao de ${req.body.valor} com taxa de ${req.body.taxa}% em ${req.body.parcelas} x ${parcela} `)
     }else {
