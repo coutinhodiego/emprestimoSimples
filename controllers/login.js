@@ -1,10 +1,11 @@
+//acessando o express, middlewares e schemas.
 const express = require('express');
 const UserSchema = require('../schemas/userSchema');
 const passwordHash = require('password-hash');
 const jwt = require('jsonwebtoken');
-
+//ativa Router()
 let router = express.Router();
-
+//efetua o login.
 router.post('/', (req, res) => {
   let query = {email : req.body.email};
 
@@ -19,5 +20,5 @@ router.post('/', (req, res) => {
   });
 
 });
-
+//exporta como um modulo o router.
 module.exports = router;

@@ -1,12 +1,12 @@
+//acessando o express, middlewares e schemas.
 const express = require('express');
 const expressJwt = require('express-jwt');
 const UserSchema = require('../schemas/userSchema');
-
+//ativa Router()
 let router = express.Router();
-
-//middleware do expressJwt que protege as rotas abaixo com a verificacao do token ativo.
+//verifica o token ativo.
 router.use(expressJwt({secret: 'money'}));
-//simulacao de emprestimo
+//simulacao de emprestimo.
 router.post('/', (req, res) => {
   UserSchema.findById(req.user._id, (error, usuario) => {
     let margem = usuario.renda * 0.3;
@@ -20,5 +20,5 @@ router.post('/', (req, res) => {
     }
   });
 });
-
+//exporta como um modulo router.
 module.exports = router;
