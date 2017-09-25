@@ -30,8 +30,14 @@ router.get('/', (req, res) => {
     res.send(response, 200);
   });
 });
-// remove um usuario cadastrado atravez do parametro id /cadastro/id
+//lista o usuario cadastrado buscando pelo id passado como parametro.
 router.get('/:id', (req, res) => {
+    UserSchema.findById(req.params.id, (error, response) => {
+      res.send(response, 200);
+    });
+});
+// remove um usuario cadastrado atravez do parametro id /cadastro/id
+router.get('/delete/:id', (req, res) => {
     UserSchema.findByIdAndRemove(req.params.id, (error, usuario) => {
       console.log(error);
     });

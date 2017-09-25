@@ -10,16 +10,15 @@ router.use(expressJwt({secret: 'money'}));
 router.post('/', (req, res) => {
   UserSchema.findById(req.user._id, (error, usuario) => {
     let margem = usuario.renda * 0.3;
-    let juros = req.body.valor * req.body.parcelas * (req.body.taxa /100);
-    let parcela = (parseInt(req.body.valor) + juros) / req.body.parcelas;
+    let taxa = req.body.taxa / 100;
+    let simulacao = req.body.valor * req.body.parcelas * taxa;
     let data = new Date;
 
     if(req.body.valor <= margem ){
       usuario.emprestimos = {
         valor: req.body.valor,
         parcelas: req.body.parcelas,
-        valorParcela : parcela,
-        taxa: `${req.body.taxa}%`,
+        taxa: `${taxa * 100}%`,
         data: `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`
       };
       usuario.save(usuario);
