@@ -15,12 +15,13 @@ router.post('/', (req, res) => {
     let data = new Date;
 
     if(req.body.valor <= margem ){
-      usuario.emprestimos = {
+      let novoEmprestimo = {
         valor: req.body.valor,
         parcelas: req.body.parcelas,
         taxa: `${taxa * 100}%`,
         data: `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`
       };
+      usuario.emprestimos.addToSet(novoEmprestimo);
       usuario.save(usuario);
       res.send(usuario);
     }else {
